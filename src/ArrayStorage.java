@@ -23,8 +23,7 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         //-
-        int index = getIndex(r.getUuid());
-        if(index !=-1) {
+        if(getIndex(r.getUuid()) !=-1) {
             System.out.println("Error save");
         } else if (size==storage.length) {
             System.out.println("Storage overflow");

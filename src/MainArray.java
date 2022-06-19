@@ -10,50 +10,22 @@ public class MainArray {
     private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Resume r;
-        while (true) {
-            System.out.print("Введите одну из команд - (list | size | save uuid | delete uuid | get uuid | clear | exit): ");
-            String[] params = reader.readLine().trim().toLowerCase().split(" ");
-            if (params.length < 1 || params.length > 2) {
-                System.out.println("Неверная команда.");
-                continue;
-            }
-            String uuid = null;
-            if (params.length == 2) {
-                uuid = params[1].intern();
-            }
-            switch (params[0]) {
-                case "list":
-                    printAll();
-                    break;
-                case "size":
-                    System.out.println(ARRAY_STORAGE.size());
-                    break;
-                case "save":
-                    r = new Resume();
-                    r.uuid = uuid;
-                    ARRAY_STORAGE.save(r);
-                    printAll();
-                    break;
-                case "delete":
-                    ARRAY_STORAGE.delete(uuid);
-                    printAll();
-                    break;
-                case "get":
-                    System.out.println(ARRAY_STORAGE.get(uuid));
-                    break;
-                case "clear":
-                    ARRAY_STORAGE.clear();
-                    printAll();
-                    break;
-                case "exit":
-                    return;
-                default:
-                    System.out.println("Неверная команда.");
-                    break;
-            }
-        }
+        Resume r1 = new Resume();
+        r1.setUuid("#001");
+        Resume r2 = new Resume();
+        r1.setUuid("#002");
+        Resume r3 = new Resume();
+        r1.setUuid("#003");
+        Resume r4 = new Resume();
+        r1.setUuid("#004");
+
+        ARRAY_STORAGE.save(r1);
+        ARRAY_STORAGE.save(r2);
+        ARRAY_STORAGE.save(r3);
+        ARRAY_STORAGE.save(r4);
+
+        System.out.println("Get r1:" + ARRAY_STORAGE.get(r1.getUuid()));
+        System.out.println("Get size:" + ARRAY_STORAGE.size());
     }
 
     static void printAll() {
