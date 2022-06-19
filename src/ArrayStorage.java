@@ -2,29 +2,82 @@
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
-
+    private Resume[] storage = new Resume[10000];
+    private int size = 0;
     void clear() {
+        for(int i=0; i<size;i++){
+            storage[i]=null;
+        }
     }
 
-    void save(Resume r) {
+    public void update(Resume r){
+        //+
+        int index = getIndex(r.getUuid());
+        if(index ==-1) {
+            System.out.println("Error resume update");
+        }
+        else {
+            storage[index]=r;
+        }
     }
 
-    Resume get(String uuid) {
-        return null;
+    public void save(Resume r) {
+        //-
+        int index = getIndex(r.getUuid());
+        if(index !=-1) {
+            System.out.println("Error save");
+        } else if (size==storage.length) {
+            System.out.println("Storage overflow");
+        } else {
+            storage[size]=r;
+            size++;
+        }
+    }
+    public Resume get(String uuid){
+        //+
+        int index = getIndex(uuid);
+        if(index ==-1) {
+            System.out.println("Error resume get");
+            return null;
+        }
+        return storage[index];
     }
 
-    void delete(String uuid) {
+
+
+    public void delete(String uuid) {
+        // +
+        int index = getIndex(uuid);
+        if(index ==-1) {
+            System.out.println("Error delete");
+        }
+        else {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
+        }
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
-        return new Resume[0];
+    public Resume[] getAll() {
+        Resume[] result =new Resume[size];
+        for(int i=0; i<size;i++){
+            result[i] = storage[i];
+        }
+        return result;
     }
 
-    int size() {
-        return 0;
+    public int size() {
+        return size;
+    }
+    private int getIndex(String uuid){
+        for(int i=0; i<size;i++){
+            if(uuid==storage[i].getUuid()){
+                return i;
+            }
+        }
+        return -1;
     }
 }
